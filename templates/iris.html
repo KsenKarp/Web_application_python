@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Dataset</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('iris') }}">Iris Dataset</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('wine') }}">Wine Dataset</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('results') }}">Classification results</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+    <h1>Iris Dataset Analytics</h1>
+    <form method="POST">
+        <button type="submit">Compare Classification Models</button>
+    </form>
+
+    <div id="dashboard">
+        {{ plot_div|safe }}
+    </div>
+
+    {% if accuracy_results %}
+        <h2>Model Accuracy Results:</h2>
+        <ul>
+            {% for model, accuracy in accuracy_results.items() %}
+                <li>{{ model }}: {{ accuracy*100 }}%</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

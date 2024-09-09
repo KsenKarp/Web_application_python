@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Dataset</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('iris') }}">Iris Dataset</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('wine') }}">Wine Dataset</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('results') }}">Classification results</a>
+            </li>
+        </ul>
+    </div>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to Flask!</h1>
+
+        {% if greeting %}
+            <p>{{ greeting }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name" name="name">
+
+            <label for="name">Enter your age:</label>
+            <input type="number" id="age" name="age">
+
+            <label for="name">Enter your city:</label>
+            <input type="text" id="city" name="city">
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div id="dashboard">
+            <!-- Здесь будут интерактивные графики -->
+            {{ plot_div|safe }}
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Dataset</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('iris') }}">Iris Dataset</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('wine') }}">Wine Dataset</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('results') }}">Classification results</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <h1 class="text-center">Wine Dataset</h1>
+
+    <h2>Wine dataset plots</h2>
+    <div class="chart" id="wine-dataset-plots">{{ plot_div | safe }}</div>
+
+    <h2>Interactive Plot</h2>
+    <form method="POST" action="/wine">
+        <input type="hidden" name="action" value="update_plot">
+        <div class="form-group">
+            <label for="x_axis_feature">X-axis feature:</label>
+            <select id="x_axis_feature" name="x_axis_feature">
+                {% for feature in wine_data.feature_names %}
+                <option value="{{ feature }}">{{ feature }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="y_axis_feature">Y-axis feature:</label>
+            <select id="y_axis_feature" name="y_axis_feature">
+                {% for feature in wine_data.feature_names %}
+                <option value="{{ feature }}">{{ feature }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="plot_type">Plot type:</label>
+            <select id="plot_type" name="plot_type">
+                <option value="scatter">Scatter plot</option>
+                <option value="histogram">Histogram</option>
+                <option value="histogram with avg grouping">Histogram with avg grouping</option>
+                <option value="box">Box plot</option>
+            </select>
+        </div>
+        <div class="chart" id="interactive-plot">{{ plot_div1 | safe }}</div>
+        <button type="submit" class="btn btn-primary btn-block">Update Interactive Plot</button>
+    </form>
+
+    <h2>Compare Models</h2>
+    <form method="POST" action="/wine">
+        <input type="hidden" name="action" value="compare_models">
+        <div class="chart" id="compare-models">{{ plot_div2 | safe }}</div>
+        {% if accuracy_results %}
+        <h2>Model Accuracy Results:</h2>
+        <ul>
+            {% for model, accuracy in accuracy_results.items() %}
+                <li>{{ model }}: {{ accuracy }}%</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <button type="submit" class="btn btn-primary btn-block">Compare Models</button>
+    </form>
+
+
+
+    <h2 class="text-center">Contents of dataframe:</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            {% for table in tables %}
+            {{ table|safe }}
+        {% endfor %}
+        </table>
+    </div>
+
+
+</div>
+</body>
+</html>
